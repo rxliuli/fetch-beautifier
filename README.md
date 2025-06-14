@@ -1,54 +1,34 @@
-# React + TypeScript + Vite
+# Fetch Beautifier
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Tired of manually cleaning up messy fetch code copied from DevTools? 😫
 
-Currently, two official plugins are available:
+I've created a free online tool that transforms messy fetch requests into clean, readable code with just one click.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- ✅ Automatically parses URL parameters
+- ✅ Intelligently handles embedded JSON
+- ✅ Perfectly formats JSON/FormData body
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Try it now! 👇
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Visit <https://rxliuli.com/fetch-beautifier/>
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Why Fetch Beautifier?
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+When debugging network requests in browser DevTools, the copied fetch code often comes with unnecessary formatting and complexity. Fetch Beautifier helps you:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- Clean up messy fetch code instantly
+- Make your code more readable and maintainable
+- Save time on manual formatting
+- Generate production-ready fetch requests
+
+## How to Use
+
+1. Copy your fetch code from DevTools
+2. Paste it into Fetch Beautifier
+3. Get clean, formatted code instantly!
+
+## Contributing
+
+Feel free to submit issues and enhancement requests!
