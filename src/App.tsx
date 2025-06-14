@@ -7,6 +7,7 @@ import { Toaster } from './components/ui/sonner'
 import { InputArea } from './components/InputArea'
 import { ResultView } from './components/ResultView'
 import defaultCode from './lib/example/default.js?raw'
+import { curl2json } from './lib/curl2json'
 
 export function App() {
   const [input, setInput] = useState(defaultCode)
@@ -24,6 +25,12 @@ export function App() {
 
     setIsLoading(true)
     try {
+      if (value.startsWith('curl')) {
+        const json = curl2json(value)
+        const generatedCode = await generateFriendlyFetch(json)
+        setResult({ generatedCode })
+        return
+      }
       const parseResult = await parseFetchCode(value)
       if (parseResult.error) {
         toast.error(parseResult.error)

@@ -4,6 +4,7 @@ import { Button } from './ui/button'
 import urlParams from '../lib/example/urlParams.js?raw'
 import jsonPost from '../lib/example/jsonPost.js?raw'
 import formDataPost from '../lib/example/formDataPost.js?raw'
+import curl from '../lib/example/curl.sh?raw'
 import { useEffect, useRef } from 'react'
 
 interface InputAreaProps {
@@ -15,6 +16,7 @@ const examples = {
   urlParams: urlParams,
   jsonPost: jsonPost,
   formDataPost: formDataPost,
+  curl: curl,
 }
 
 export function InputArea({ value, onChange }: InputAreaProps) {
@@ -66,6 +68,13 @@ export function InputArea({ value, onChange }: InputAreaProps) {
           onClick={() => handleExampleClick(examples.formDataPost)}
         >
           FormData POST
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => handleExampleClick(examples.curl)}
+        >
+          Curl
         </Button>
       </CardFooter>
     </Card>
