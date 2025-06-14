@@ -1,9 +1,15 @@
 {
-  "name": "better-fetch-copier",
+  "name": "fetch-beautifier",
   "main": "src/index.ts",
   "compatibility_date": "2025-01-01",
   "assets": {
     "directory": "dist",
     "binding": "ASSETS"
-  }
+  },
+  "routes": [
+    {
+      "pattern": "rxliuli.com/fetch-beautifier/*",
+      "zone_name": "rxliuli.com"
+    }
+  ]
 }
