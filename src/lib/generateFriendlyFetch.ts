@@ -25,8 +25,43 @@ function parseString(str: string) {
   }
 }
 
+function cleanHeaders(headers: HeadersInit) {
+  const cond = (k: string): boolean => !k.startsWith('sec-ch-ua')
+  if (Array.isArray(headers)) {
+    return headers.filter(([k]) => cond(k))
+  }
+  if (headers instanceof Headers) {
+    const newHeaders = new Headers()
+    headers.forEach((_v, k) => {
+      if (cond(k)) {
+        newHeaders.set(k, _v)
+      }
+    })
+    return newHeaders
+  }
+  return Object.keys(headers).reduce((acc, k) => {
+    if (cond(k)) {
+      acc[k] = headers[k]
+    }
+    return acc
+  }, {} as Record<string, string>)
+}
+
+function cleanInit(init: RequestInit): RequestInit {
+  const newInit = { ...init }
+  if (newInit.headers) {
+    newInit.headers = cleanHeaders(newInit.headers)
+  }
+  if (newInit.mode === 'cors' && newInit.credentials === 'include') {
+    delete newInit.mode
+    delete newInit.credentials
+  }
+  return newInit
+}
+
 export async function generateFriendlyFetch(fetchObj: CapturedFetch) {
-  const { url, init = {} } = fetchObj
+  const url = fetchObj.url
+  const init = cleanInit(fetchObj.init ?? {})
   const before: string[] = []
   const output: string[] = []
   let urlStr = url
@@ -66,7 +101,12 @@ export async function generateFriendlyFetch(fetchObj: CapturedFetch) {
       if (typeof v === 'string') {
         try {
           const json = JSON.parse(v)
-          output.push(stringTab(`body: JSON.stringify(${JSON.stringify(json, null, 2)}),`, 2))
+          output.push(
+            stringTab(
+              `body: JSON.stringify(${JSON.stringify(json, null, 2)}),`,
+              2,
+            ),
+          )
         } catch {
           output.push(stringTab(`body: ${JSON.stringify(v)},`, 2))
         }
@@ -90,7 +130,9 @@ export async function generateFriendlyFetch(fetchObj: CapturedFetch) {
           if (value instanceof File) {
             str += `new File([new TextEncoder().encode(${JSON.stringify(
               await value.text(),
-            )}).buffer], ${JSON.stringify(value.name)}, { type: ${JSON.stringify(value.type)} })`
+            )}).buffer], ${JSON.stringify(
+              value.name,
+            )}, { type: ${JSON.stringify(value.type)} })`
           } else {
             str += parseString(value)
           }

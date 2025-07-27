@@ -1,5 +1,9 @@
 import { afterEach, assert, beforeEach, describe, expect, it, vi } from 'vitest'
-import { generateFriendlyFetch, type CapturedFetch } from './generateFriendlyFetch'
+import {
+  generateFriendlyFetch,
+  type CapturedFetch,
+} from './generateFriendlyFetch'
+import { omit } from 'es-toolkit'
 
 describe('generateFriendlyFetch', () => {
   let lastRequest: CapturedFetch
@@ -93,7 +97,10 @@ describe('generateFriendlyFetch', () => {
   })
   it('post request with file form data', async () => {
     const fd = new FormData()
-    fd.append('file', new File(['Hello, world!'], 'hello.txt', { type: 'text/plain' }))
+    fd.append(
+      'file',
+      new File(['Hello, world!'], 'hello.txt', { type: 'text/plain' }),
+    )
     const fetchObj: CapturedFetch = {
       url: 'https://example.com/api/v1/users',
       init: {
@@ -117,7 +124,9 @@ describe('generateFriendlyFetch', () => {
       },
     }
     const code = await generateFriendlyFetch(fetchObj)
-    expect(code).contain(JSON.stringify({ foo: 'bar', arr: [1, 2, 3] }, null, 2))
+    expect(code).contain(
+      JSON.stringify({ foo: 'bar', arr: [1, 2, 3] }, null, 2),
+    )
     eval(code)
     await expectRequest(fetchObj)
   })
@@ -184,6 +193,29 @@ describe('generateFriendlyFetch', () => {
     eval(code)
     delete fetchObj.init?.body
     delete fetchObj.init?.method
-    await expectRequest(fetchObj)
+    expect(lastRequest.init).deep.eq(
+      omit(fetchObj.init!, ['mode', 'credentials']),
+    )
+  })
+  it('should clean up sec-ch-ua headers', async () => {
+    const fetchObj: CapturedFetch = {
+      url: 'https://example.com/api/v1/users',
+      init: {
+        headers: {
+          'Content-Type': 'application/json',
+          'sec-ch-ua': 'Chromium',
+          'sec-ch-ua-mobile': '?0',
+          'sec-ch-ua-platform': '"macOS"',
+        },
+      },
+    }
+    const code = await generateFriendlyFetch(fetchObj)
+    expect(code).not.contain('sec-ch-ua')
+    eval(code)
+    expect(lastRequest.init).toEqual({
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
   })
 })
