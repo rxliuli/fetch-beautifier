@@ -1,7 +1,9 @@
 {
   "name": "@fetch-beautifier/root",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "init-all": "pnpm -r run init"
+  },
   "license": "GPL-3.0-only",
   "packageManager": "pnpm@10.10.0"
 }

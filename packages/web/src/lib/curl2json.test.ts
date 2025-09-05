@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { curl2json } from './curl2json'
-import type { CapturedFetch } from './generateFriendlyFetch'
+import type { CapturedFetch } from '@fetch-beautifier/core'
 
 describe('curl2json', () => {
   it('simple get request', () => {

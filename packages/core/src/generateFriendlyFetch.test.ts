@@ -1,9 +1,5 @@
 import { afterEach, assert, beforeEach, describe, expect, it, vi } from 'vitest'
-import {
-  generateFriendlyFetch,
-  type CapturedFetch,
-} from './generateFriendlyFetch'
-import { omit } from 'es-toolkit'
+import { generateFriendlyFetch, type CapturedFetch } from './generateFriendlyFetch'
 
 describe('generateFriendlyFetch', () => {
   let lastRequest: CapturedFetch
@@ -193,9 +189,9 @@ describe('generateFriendlyFetch', () => {
     eval(code)
     delete fetchObj.init?.body
     delete fetchObj.init?.method
-    expect(lastRequest.init).deep.eq(
-      omit(fetchObj.init!, ['mode', 'credentials']),
-    )
+    delete fetchObj.init?.mode
+    delete fetchObj.init?.credentials
+    expect(lastRequest.init).deep.eq(fetchObj.init!)
   })
   it('should clean up sec-ch-ua headers', async () => {
     const fetchObj: CapturedFetch = {

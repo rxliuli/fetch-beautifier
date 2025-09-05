@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { parseFetchCode } from './fetch-parser'
 
 describe('parseFetchCode', () => {
@@ -25,7 +25,9 @@ describe('parseFetchCode', () => {
     expect(result.fetchObj).toBeDefined()
     expect(result.fetchObj?.url).toBe('https://api.example.com/users')
     expect(result.fetchObj?.init?.method).toBe('POST')
-    expect(result.fetchObj?.init?.headers).toEqual({ 'Content-Type': 'application/json' })
+    expect(result.fetchObj?.init?.headers).toEqual({
+      'Content-Type': 'application/json',
+    })
     expect(result.fetchObj?.init?.body).toBe(JSON.stringify({ name: 'John' }))
   })
 
@@ -53,7 +55,9 @@ describe('parseFetchCode', () => {
     `
     const result = await parseFetchCode(code)
     expect(result.fetchObj).toBeDefined()
-    expect(result.fetchObj?.url).toBe('https://api.example.com/users?page=1&limit=10')
+    expect(result.fetchObj?.url).toBe(
+      'https://api.example.com/users?page=1&limit=10',
+    )
   })
 
   it('should parse fetch request with FormData', async () => {

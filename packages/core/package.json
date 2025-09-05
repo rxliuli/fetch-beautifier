@@ -1,0 +1,22 @@
+{
+  "name": "@fetch-beautifier/core",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "init": "pnpm build",
+    "build": "tsup src/index.ts --format esm --dts",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.0",
+    "typescript": "~5.8.3",
+    "vitest": "^3.2.4"
+  }
+}

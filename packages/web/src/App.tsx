@@ -1,7 +1,6 @@
 import { Loader2 } from 'lucide-react'
 import { useState, useEffect } from 'react'
-import { parseFetchCode } from './lib/fetch-parser'
-import { generateFriendlyFetch } from './lib/generateFriendlyFetch'
+import { parseFetchCode, generateFriendlyFetch } from '@fetch-beautifier/core'
 import { toast } from 'sonner'
 import { Toaster } from './components/ui/sonner'
 import { InputArea } from './components/InputArea'

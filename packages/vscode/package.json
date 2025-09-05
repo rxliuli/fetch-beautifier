@@ -1,0 +1,94 @@
+{
+  "name": "fetch-beautifier",
+  "displayName": "Fetch Beautifier",
+  "description": "A VSCode extension to format and beautify fetch API code snippets.",
+  "version": "0.1.0",
+  "icon": "public/icon.png",
+  "publisher": "rxliuli",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rxliuli/fetch-beautifier"
+  },
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "private": true,
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "fetch-beautifier.pasteFormatted",
+        "title": "Paste and Format Fetch",
+        "category": "Fetch Beautifier"
+      },
+      {
+        "command": "fetch-beautifier.formatSelection",
+        "title": "Format Fetch Code",
+        "category": "Fetch Beautifier"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "fetch-beautifier.pasteFormatted",
+          "group": "9_cutcopypaste",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "fetch-beautifier.formatSelection",
+          "group": "1_modification",
+          "when": "editorHasSelection"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "fetch-beautifier.formatSelection",
+          "when": "editorHasSelection"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "fetch-beautifier.pasteFormatted",
+        "key": "ctrl+shift+v",
+        "mac": "cmd+shift+v",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "fetch-beautifier.formatSelection",
+        "key": "alt+shift+f",
+        "when": "editorTextFocus && editorHasSelection"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "tsup src/extension.ts",
+    "watch": "tsup src/extension.ts --watch",
+    "release": "pnpm build && vsce package --no-dependencies"
+  },
+  "keywords": [
+    "fetch",
+    "devtools",
+    "formatter",
+    "beautifier",
+    "http",
+    "api",
+    "network",
+    "request",
+    "chrome devtools"
+  ],
+  "categories": [
+    "Formatters",
+    "Other"
+  ],
+  "author": "rxliuli",
+  "license": "GPL-3.0-only",
+  "packageManager": "pnpm@10.10.0",
+  "devDependencies": {
+    "@types/node": "^24.3.1",
+    "@types/vscode": "^1.100.0",
+    "tsup": "^8.5.0",
+    "typescript": "~5.8.3",
+    "@fetch-beautifier/core": "workspace:^"
+  }
+}

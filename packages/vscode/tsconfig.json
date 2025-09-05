@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
+    "lib": [
+      "esnext",
+    ],
+    "moduleResolution": "bundler",
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "exclude": [
+    "kubb.config.ts",
+    "build.config.ts",
+    "**/*.test.ts",
+    "dist"
+  ]
+}

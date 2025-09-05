@@ -1,4 +1,4 @@
-import type { CapturedFetch } from './generateFriendlyFetch'
+import type { CapturedFetch } from "./generateFriendlyFetch"
 
 export interface ParseResult {
   fetchObj?: CapturedFetch
@@ -13,7 +13,7 @@ export async function parseFetchCode(code: string): Promise<ParseResult> {
     return Promise.resolve(new Response('mock'))
   }
   try {
-    eval(code)
+    ;(0, eval)(code)
     if (!captured) {
       return {
         error: 'No fetch request found in the code',
@@ -25,6 +25,6 @@ export async function parseFetchCode(code: string): Promise<ParseResult> {
       error: error instanceof Error ? error.message : 'Invalid JavaScript code',
     }
   } finally {
-    window.fetch = originalFetch
+    globalThis.fetch = originalFetch
   }
 }

@@ -1,4 +1,4 @@
-import type { CapturedFetch } from './generateFriendlyFetch'
+import type { CapturedFetch } from '@fetch-beautifier/core'
 import parse from '@bany/curl-to-json'
 
 export function curl2json(curl: string): CapturedFetch {
